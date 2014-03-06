@@ -178,23 +178,27 @@ var FSMWidgets, SlideMenuGlobal;
         },
         unfold:function(){
             var _this = this,
-            slideBox = _this.slideBox;
-            if(!_this.isFold)return;
+            slideBox = _this.slideBox;            
+            if(!_this.animating&&!_this.isFold)return;
             
             S.one(slideBox).fadeIn(0.3,function(){
-            	_this.isFold = false;
+                _this.animating = false;
+                _this.isFold = false;
             });
+            _this.animating = true;
         },
         fold:function(){
             var _this = this,
             options = _this.options,
             slideBox = _this.slideBox;
-            if(_this.isFold)return;
+            if(!_this.animating&&_this.isFold)return;
             D.removeClass(options,"hover");
             
             S.one(slideBox).slideUp(0.2,function(){
-            	_this.isFold = true;
+                _this.isFold = true;
+                _this.animating = false;
             });
+            _this.animating = true;
         },
         highlightItem:function(curItem){
             var _this = this,
